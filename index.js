@@ -1,5 +1,78 @@
 /* Your Code Here */
+ const createEmployeeRecord = (ele) => {
+    return {
+        firstName: ele[0],
+        familyName: ele[1],
+        title: ele[2],
+        payPerHour: ele[3],
+        timeInEvents: [],
+        timeOutEvents: []
+    }
+ }
+ 
+ const createEmployeeRecords = (nestedArray) => {
+    const arrayOfObjects = []
+    for(let rec of nestedArray) {
+        let newRec =createEmployeeRecord(rec)
+        arrayOfObjects.push(newRec)
+    }
+    return arrayOfObjects
+ }
 
+ const createTimeInEvent = function(stamp) {
+    // const [date, hour] = stamp.split(' ')
+    // const splitedDate = date.split(' ')
+    // const splitedHour = hour.split(' ')
+    const [date, hour] = stamp.split(' ')
+    this.timeInEvents.push({
+        type: "TimeIn",
+        hour: parseInt(hour),
+        date: date
+    })
+    return this
+}
+
+const createTimeOutEvent = function(dateStamp) {
+    const [date, hour] = dateStamp.split(' ')
+    this.timeOutEvents.push({
+        type: "TimeOut",
+        hour: parseInt(hour),
+        date: date
+    })
+    return this
+}
+
+const hoursWorkedOnDate = function(dateStamp){
+    const timeInEvent = this.timeInEvents.find((e) => {
+        return e.date === dateStamp
+    })
+    const timeOutEvent = this.timeOutEvents.find((e) => {
+        return e.date === dateStamp
+    })
+
+    const hoursWorked = (timeOutEvent.hour - timeInEvent.hour) / 100
+    return hoursWorked
+}
+
+const wagesEarnedOnDate = function(dateSought){
+    let payOwed = hoursWorkedOnDate.call(this, dateSought)
+    * this.payPerHour
+    return parseFloat(payOwed.toString())
+}
+
+const findEmployeeByFirstName = (srcArray, firstName) => {
+    return srcArray.find((rec) => {
+        return rec.firstName === firstName
+    })
+}
+
+let calculatePayroll = (arr) => {
+    let sum = 0;
+    for (let employee of arr) {
+        sum += allWagesFor.call(employee)
+    }
+    return sum;
+}
 /*
  We're giving you this function. Take a look at it, you might see some usage
  that's new and different. That's because we're avoiding a well-known, but
